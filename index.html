@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#047857">
+<title>Badminton Player Selector</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>Badminton Player Selector</h1>
+  <div class="row"><button id="installBtn" class="btn outline" hidden>Install App</button>
+  <span id="playerCount">0 players</span></div>
+</header>
+
+<main>
+  <section class="card" id="left">
+    <h2>Manage Players</h2>
+    <form id="addForm" class="row">
+      <input id="nameInput" placeholder="Player name" autocomplete="off">
+      <button class="btn green" type="submit">Add</button>
+    </form>
+    <ul id="playerList"></ul>
+    <div class="row small-gap">
+      <button class="btn outline" id="exportBtn">Export</button>
+      <button class="btn outline" id="importBtn">Import</button>
+      <input type="file" id="importFile" accept=".json" hidden>
+    </div>
+  </section>
+
+  <section class="card" id="right">
+    <div class="row between wrap">
+      <h2>Selection Panel</h2>
+      <div class="toggle">
+        <span class="muted label">Court setup:</span>
+        <button data-courts="1">1 Court</button><button data-courts="2">2 Courts</button>
+      </div>
+    </div>
+    <div class="row wrap small-gap">
+      <button class="btn teal" id="selectAllBtn">Select 4 Players</button>
+      <button class="btn outline" id="restartBtn">Restart Selection</button>
+      <button class="btn outline red" id="resetBtn">Reset History</button>
+    </div>
+    <p class="muted label" id="progress"></p>
+    <div id="courts"></div>
+  </section>
+</main>
+
+<dialog id="manualDlg">
+  <form method="dialog" id="manualForm">
+    <h2 id="manualTitle">Manual Pick</h2>
+    <p class="muted" id="manualHint"></p>
+    <div id="manualSlots"></div>
+    <p id="manualPreview" class="label"></p>
+    <div class="row wrap small-gap">
+      <button type="button" class="btn outline" id="autoFillBtn">Auto-fill Rest</button>
+      <button type="button" class="btn outline" id="balanceBtn">Balance Teams</button>
+      <button type="button" class="btn outline" id="clearBtn">Clear</button>
+    </div>
+    <div class="row end small-gap" style="margin-top:14px">
+      <button type="button" class="btn green" id="startManualBtn">Start Game</button>
+      <button type="button" class="btn outline" id="cancelManualBtn">Cancel</button>
+    </div>
+  </form>
+</dialog>
+
+<script src="app.js"></script>
+<script>
+  if ("serviceWorker" in navigator) navigator.serviceWorker.register("./sw.js");
+  let installEvt = null;
+  const installBtn = document.getElementById("installBtn");
+  window.addEventListener("beforeinstallprompt", e => {
+    e.preventDefault(); installEvt = e; installBtn.hidden = false;
+  });
+  installBtn.onclick = async () => {
+    if (!installEvt) return;
+    installEvt.prompt(); await installEvt.userChoice;
+    installEvt = null; installBtn.hidden = true;
+  };
+  window.addEventListener("appinstalled", () => installBtn.hidden = true);
+</script>
+</body>
+</html>
