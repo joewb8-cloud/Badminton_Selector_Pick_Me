@@ -20,7 +20,7 @@ input,select{font:inherit;padding:7px;border:1px solid #94A3B8;border-radius:4px
 .outline.red{color:var(--red);border-color:var(--red)}
 .toggle button{font:inherit;padding:4px 12px;border:1px solid var(--dark);background:#fff;cursor:pointer}
 .toggle button.on{background:var(--green);color:#fff;border-color:var(--green)}
-#playerList{list-style:none;padding:6px;margin:12px 0;background:var(--list);flex:1;overflow:auto;
+#playerList{list-style:none;padding:6px;margin:12px 0 0;background:var(--list);flex:1;overflow:auto;
  display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:4px;align-content:start;min-height:150px}
 #playerList li{background:#fff;padding:5px 8px;display:flex;justify-content:space-between;align-items:center;font-weight:700;font-size:14px}
 #playerList li.oncourt{color:var(--teal)}

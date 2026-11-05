@@ -1,5 +1,5 @@
 // Badminton Player Selector - PWA version
-const START_RATING = 1000, K_FACTOR = 32, MAX_COURTS = 2, STORE = "badmintonSelector";
+const START_RATING = 1000, K_FACTOR = 32, STORE = "badmintonSelector";
 const $ = id => document.getElementById(id);
 const pairKey = (a, b) => [a, b].sort().join("\u0001");
 
@@ -280,19 +280,5 @@ document.querySelectorAll(".toggle button").forEach(b => b.onclick = () => {
   }
   S.numCourts = n; render();
 });
-$("exportBtn").onclick = () => {
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(new Blob([JSON.stringify(S, null, 2)], { type: "application/json" }));
-  a.download = `badminton-${new Date().toISOString().slice(0, 10)}.json`; a.click();
-};
-$("importBtn").onclick = () => $("importFile").click();
-$("importFile").onchange = e => {
-  const f = e.target.files[0]; if (!f) return;
-  f.text().then(t => {
-    try { const d = JSON.parse(t); if (!Array.isArray(d.players)) throw 0; S = Object.assign(S, d); render(); }
-    catch { alert("That file isn't a valid Badminton Selector export."); }
-    e.target.value = "";
-  });
-};
 
 load(); render();

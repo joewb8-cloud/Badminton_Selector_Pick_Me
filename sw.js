@@ -1,8 +1,7 @@
-const CACHE = "badminton-v2";
+const CACHE = "badminton-v3";
 const FILES = ["./", "./index.html", "./style.css", "./app.js", "./manifest.json",
                "./icon-192.png", "./icon-512.png"];
 self.addEventListener("install", e => {
-  // Cache files one by one so a single missing file can't break installation
   e.waitUntil(caches.open(CACHE).then(c =>
     Promise.all(FILES.map(f => c.add(f).catch(() => console.warn("Not cached:", f))))));
   self.skipWaiting();
